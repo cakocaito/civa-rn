@@ -58,29 +58,31 @@ export default function App() {
       {/* View para iamgem da logo */}
       <View style={styles.viewLogo}>
         {/* <Image 
-          source={require('./assets/logo-civa.png')}
+          source={req"uire('./assets/logo-civa.png')}
         /> */}
         <Text style={styles.textoTopo}>CIVA</Text>
       </View>
 
       {/* View para entradas */}
+      <Text style={styles.textoEntradas}>Email</Text>
       <View style={styles.viewEntradas}>
-        <Text style={styles.textoEntradas}>Email</Text>
         <TextInput 
           style={styles.entradas}
           // placeholder="Email"
           autoCorrect={false}
           onChangeText={() => {}}
         />
-        <Text style={styles.textoEntradas}>Senha</Text>
+      </View>
+      <Text style={styles.textoEntradas}>Senha</Text>
+      <View style={styles.viewEntradas}>
         <TextInput 
           style={styles.entradas}
           // placeholder="Senha"
           autoCorrect={false}
           onChangeText={() => {}}
           />
-      </View>
-      <TouchableOpacity>
+      </View>    
+      <TouchableOpacity style={styles.viewBotao}>
         <LinearGradient colors={['rgba(111, 207, 151, 1)', 'rgba(102, 210, 234, 1)']} style={styles.botao}>
           <Text style={styles.textoBotao}>Login</Text>
         </LinearGradient>
@@ -95,32 +97,41 @@ export default function App() {
 const styles = StyleSheet.create({
   background:{
     flex:1,
-    alignItems: 'center',
-    justifyContent: 'center',
+    // alignItems: 'center',
+    // justifyContent: 'center',
   },
   viewLogo:{
     // flex:1,
     // justifyContent: 'center',
     // textAlign: 'center',
-    top: -120,
+    top: '15%',
   },
   viewEntradas:{
-    // flex:1,
+    alignSelf: 'center',
     alignItems: 'center',
     justifyContent: 'center',
-    width: '90%',
+    width: '95%',
+    top: '20%',
     padding: 10,
   }, 
   entradas:{
+    alignItems: 'center',
+    justifyContent: 'center',
     backgroundColor: 'snow',
     width: '90%',
     marginBottom: 15,
     color: '#222',
-    fontSize: 17,
     borderRadius: 7,
     borderWidth: 1,
     borderColor: 'rgb(169,169,169)',
     padding: 10,
+  },
+  textoEntradas:{
+    position:'relative',
+    color: 'rgb(169,169,169)',
+    top: '20%',
+    left: '10%',
+    fontFamily: 'Roboto_700Bold',
   },
   textoTopo:{
     fontFamily: 'RedHatDisplay_400Regular',
@@ -128,29 +139,31 @@ const styles = StyleSheet.create({
     fontWeight:'100',
     color: 'rgba(188, 156, 255, 1)',
     textAlign:'center',
-    top:'15%',
+    // top:'15%',
+  },
+  viewBotao:{
+    position: 'relative',
+    top:'30%',
+    alignItems: 'center',
   },
   botao:{
+    justifyContent: 'center',
     width:150,
     height:68,
     backgroundColor:'rgba(111, 207, 151, 1)',
     borderRadius: 22,
+    top: 0,
   },
   textoBotao:{
     fontFamily: 'Roboto_700Bold',
-    fontSize: 30,
-    flex:0,
+    fontSize: 24,
     textAlign: 'center',
     justifyContent: 'center',
     alignItems: 'center',
     color:'snow',
   },
-  textoEntradas:{
-    
-  },
   cadastro:{
-    bottom: -100,
-    flex:0,
+    top: '40%',
     alignItems: 'center',
     justifyContent: 'center',
   },
