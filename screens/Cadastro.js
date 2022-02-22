@@ -26,13 +26,29 @@ import {
 import { useFonts } from 'expo-font';
 import AppLoading from 'expo-app-loading';
 import { LinearGradient } from 'expo-linear-gradient';
-import { useState } from 'react';
+import React, { useState } from 'react';
 // import { Button } from 'react-native-web';
+import { createUserWithEmailAndPassword } from 'firebase/auth'
+import { auth } from '../src/services/firebaseConnection';
 
 export default function Cadastro({navigation}) {
   const [nomeCompleto, setNomeCompleto] = useState('')
   const [email, setEmail] = useState('')
-  const [senha, setSenha] = useState('')
+  const [password, setPassword] = useState('')
+
+  async function criarUsuario(){
+    await createUserWithEmailAndPassword(auth, email, password)
+    .then(value => {
+      console.log('cadastro realizado\n'+ value.user.uid)
+      alert("Cadastro realizado com sucesso")
+      navigation.reset({
+        index:0,
+        routes: [{name:"Login"}]
+      })
+    })
+    .catch(error => console.log(error))
+  };
+
   let[fontsLoaded, error]=useFonts({
     Roboto_100Thin,
     Roboto_100Thin_Italic,
@@ -101,13 +117,15 @@ export default function Cadastro({navigation}) {
           placeholderTextColor="#A9A9A9" 
           passwordRules='true'
           autoCorrect={false}
-          value = {senha}
-          onChangeText={value => setSenha(value)}
+          value = {password}
+          onChangeText={value => setPassword(value)}
           />
       </View>    
-      <TouchableOpacity style={styles.viewBotao} onPress={() => {}}>
+      <TouchableOpacity style={styles.viewBotao} onPress={() => 
+        criarUsuario()
+      }>
         <LinearGradient colors={['rgba(111, 207, 151, 1)', 'rgba(102, 210, 234, 1)']} style={styles.botao}>
-          <Text style={styles.textoBotao}>Login</Text>
+          <Text style={styles.textoBotao}>Cadastro</Text>
         </LinearGradient>
       </TouchableOpacity>
       <View style={styles.cadastro}>
@@ -134,14 +152,14 @@ const styles = StyleSheet.create({
     // flex:1,
     // justifyContent: 'center',
     // textAlign: 'center',
-    top: '15%',
+    top: '13%',
   },
   viewEntradas:{
     alignSelf: 'center',
     alignItems: 'center',
     justifyContent: 'center',
     width: '95%',
-    top: '20%',
+    top: '15%',
     padding: 10,
   }, 
   entradas:{
@@ -159,7 +177,7 @@ const styles = StyleSheet.create({
   textoEntradas:{
     position:'relative',
     color: 'rgb(169,169,169)',
-    top: '20%',
+    top: '15%',
     left: '10%',
     fontFamily: 'Roboto_700Bold',
   },
@@ -173,7 +191,7 @@ const styles = StyleSheet.create({
   },
   viewBotao:{
     position: 'relative',
-    top:'23%',
+    top:'18%',
     alignItems: 'center',
   },
   botao:{
@@ -193,7 +211,7 @@ const styles = StyleSheet.create({
     color:'snow',
   },
   cadastro:{
-    top: '30%',
+    top: '20%',
     alignItems: 'center',
     justifyContent: 'center',
   },

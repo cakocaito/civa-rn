@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Button, KeyboardAvoidingView, Image, TextInput, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, KeyboardAvoidingView, Image, TextInput, TouchableOpacity } from 'react-native';
 import { 
   RedHatDisplay_400Regular,
   RedHatDisplay_400Regular_Italic,
@@ -28,10 +28,24 @@ import AppLoading from 'expo-app-loading';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useState } from 'react';
 // import { Button } from 'react-native-web';
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from '../src/services/firebaseConnection';
 
 export default function Login({navigation}) {
   const [email, setEmail] = useState('')
-  const [senha, setSenha] = useState('')
+  const [password, setPassword] = useState('')
+  async function logarUsuario(){
+    await signInWithEmailAndPassword(auth, email, password)
+      .then(value=> {
+        console.log("'Logado\n"+ value.user.uid)
+        alert("Logado com sucesso")
+        navigation.reset({
+          index:0,
+          routes: [{name:"Home"}]
+        })
+      })
+      .catch((error) => console.log(error));
+  }
   let[fontsLoaded, error]=useFonts({
     Roboto_100Thin,
     Roboto_100Thin_Italic,
@@ -89,19 +103,18 @@ export default function Login({navigation}) {
           placeholderTextColor="#A9A9A9" 
           passwordRules='true'
           autoCorrect={false}
-          value = {senha}
-          onChangeText={value => setSenha(value)}
+          value = {password}
+          onChangeText={value => setPassword(value)}
           />
       </View>    
-      <TouchableOpacity style={styles.viewBotao} onPress={() => {}}>
+      <TouchableOpacity style={styles.viewBotao} onPress={() => logarUsuario()}>
         <LinearGradient colors={['rgba(111, 207, 151, 1)', 'rgba(102, 210, 234, 1)']} style={styles.botao}>
           <Text style={styles.textoBotao}>Login</Text>
         </LinearGradient>
       </TouchableOpacity>
       <View style={styles.cadastro}>
         <Text>Não possui uma conta?</Text>
-        <TouchableOpacity 
-                title="Entrar"
+        <TouchableOpacity
                 onPress={() => 
                     navigation.navigate("Cadastro")
                 }>
@@ -122,7 +135,7 @@ const styles = StyleSheet.create({
     // flex:1,
     // justifyContent: 'center',
     // textAlign: 'center',
-    top: '15%',
+    top: '13%',
   },
   viewEntradas:{
     alignSelf: 'center',
@@ -161,7 +174,7 @@ const styles = StyleSheet.create({
   },
   viewBotao:{
     position: 'relative',
-    top:'30%',
+    top:'25%',
     alignItems: 'center',
   },
   botao:{
@@ -181,7 +194,7 @@ const styles = StyleSheet.create({
     color:'snow',
   },
   cadastro:{
-    top: '40%',
+    top: '30%',
     alignItems: 'center',
     justifyContent: 'center',
   },
